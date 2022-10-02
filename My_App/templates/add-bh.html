@@ -2,65 +2,81 @@
 
 {% block content %}
 
-<div class="card mt-3 mx-auto w-50">
-    <div class="card-header">
-        <h4 class="text-center">Boarding House Form</h4>
-    </div>
-    <div class="card-body">
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label for="name" class="form-label">Boarding House Name</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="ex. John Boarding House"
-                       required>
-            </div>
-            <div class="mb-3">
-                <label for="desc" class="form-label">Description</label>
-                <input type="text" class="form-control" id="desc" name="description"
-                       placeholder="Boarding House Description"
-                       required>
-            </div>
-            <div class="mb-3">
-                <label for="number" class="form-label">Contact Number</label>
-                <input type="number" class="form-control" id="number" name="phone" placeholder="09xxxxxxxxx" required>
-            </div>
-            <div class="mb-3">
-                <label for="location" class="form-label">Location or
-                    <button type="button" class="btn btn-sm btn-primary rounded-3" onclick="getLoc()">Get my location</button>
-                </label>
-                <input type="text" class="form-control" id="location" name="location"
-                       placeholder="Boarding House Location"
-                       required>
-            </div>
-            <div class="mb-3 d-none">
-                <label for="latitude" class="form-label">Latitude</label>
-                <input type="text" class="form-control" id="latitude" name="latitude" placeholder="Latitude" readonly>
-            </div>
-            <div class="mb-3 d-none">
-                <label for="longitude" class="form-label">Longitude</label>
-                <input type="text" class="form-control" id="longitude" name="longitude" placeholder="Longitude"
-                       readonly>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Picture 1</label>
-                <input type="file" class="form-control" name="picture1"
-                       accept="image/png, image/gif, image/jpeg" multiple>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Picture 2</label>
-                <input type="file" class="form-control" name="picture2"
-                       accept="image/png, image/gif, image/jpeg" multiple>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Picture 3</label>
-                <input type="file" class="form-control" name="picture3"
-                       accept="image/png, image/gif, image/jpeg" multiple>
-            </div>
+<div class="d-flex justify-content-center mt-5">
+    <div class="card py-1" style="width: 35rem;">
+        <div class="card mt-1 mx-1">
+            <h4 class="card-header text-center">Boarding House Form</h4>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="name" class="form-label">Boarding House Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="ex. John Boarding House"
+                           required>
+                </div>
+                <div class="mb-3">
+                    <label for="desc" class="form-label">Description</label>
+                    <textarea class="form-control" id="desc" name="description"
+                              placeholder="Boarding House Description" rows="3"
+                              required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="number" class="form-label">Contact Number</label>
+                    <input type="number" class="form-control" id="number" name="phone" placeholder="09xxxxxxxxx"
+                           required>
+                </div>
+                <div class="mb-3">
+                    <label for="location" class="form-label">Location or
+                        <button type="button" class="btn btn-sm btn-primary rounded-3" onclick="getLoc()">Get my
+                            location
+                        </button>
+                    </label>
+                    <input type="text" class="form-control" id="location" name="location"
+                           placeholder="Boarding House Location"
+                           required>
+                </div>
+                <div class="mb-3 d-none">
+                    <label for="latitude" class="form-label">Latitude</label>
+                    <input type="text" class="form-control" id="latitude" name="latitude" placeholder="Latitude"
+                           readonly>
+                </div>
+                <div class="mb-3 d-none">
+                    <label for="longitude" class="form-label">Longitude</label>
+                    <input type="text" class="form-control" id="longitude" name="longitude" placeholder="Longitude"
+                           readonly>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Picture 1</label>
+                    <input type="file" class="form-control" name="picture1"
+                           accept="image/png, image/gif, image/jpeg" multiple>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Picture 2</label>
+                    <input type="file" class="form-control" name="picture2"
+                           accept="image/png, image/gif, image/jpeg" multiple>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Picture 3</label>
+                    <input type="file" class="form-control" name="picture3"
+                           accept="image/png, image/gif, image/jpeg" multiple>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Picture 4</label>
+                    <input type="file" class="form-control" name="picture4"
+                           accept="image/png, image/gif, image/jpeg" multiple>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Picture 5</label>
+                    <input type="file" class="form-control" name="picture5"
+                           accept="image/png, image/gif, image/jpeg" multiple>
+                </div>
 
-            <div class="d-grid mx-2">
-                <button class="btn btn-primary" type="submit">CREATE BOARDING HOUSE</button>
-            </div>
-        </form>
+                <div class="d-grid mx-2">
+                    <button class="btn btn-primary" type="submit">CREATE BOARDING HOUSE</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 

@@ -112,7 +112,9 @@ def addBH(request):
             longitude=request.POST.get('longitude'),
             picture1=request.FILES.get('picture1'),
             picture2=request.FILES.get('picture2'),
-            picture3=request.FILES.get('picture3')
+            picture3=request.FILES.get('picture3'),
+            picture4=request.FILES.get('picture4'),
+            picture5=request.FILES.get('picture5')
         )
         messages.success(request, 'Boarding house created!')
         return redirect('my-bh', request.user.id)
@@ -153,6 +155,8 @@ def updateBH(request, pk):
     bh.picture1 = request.FILES['picture1']
     bh.picture2 = request.FILES['picture2']
     bh.picture3 = request.FILES['picture3']
+    bh.picture4 = request.FILES['picture4']
+    bh.picture5 = request.FILES['picture5']
     bh.save()
     messages.success(request, 'Updated Successfully!')
 

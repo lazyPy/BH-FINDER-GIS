@@ -12,31 +12,31 @@
 
 <div class="d-flex justify-content-center mt-5">
 
-    <div>
-        <div class="card py-1" style="width: 23rem;">
-            <div class="card mt-1 mx-1">
-                <h4 class="card-header text-center">LOGIN</h4>
-            </div>
-            <div class="card-body">
-                <form method="post">
-                    {% csrf_token %}
-                    <div class="mb-2">
-                        <label class="form-label">Email address</label>
-                        <input type="email" name="username" class="form-control" aria-describedby="emailHelp">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Password</label>
-                        <input type="password" name="password" class="form-control">
-                    </div>
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Login</button>
-                    </div>
-                </form>
-            </div>
-            <div class="text-muted text-center">
-                <text class="mx-auto">Need an account? <a class="text-decoration-none" href="{% url 'register' %}">Register</a>
-                </text>
-            </div>
+
+    <div class="card py-1" style="width: 23rem;">
+        <div class="card mt-1 mx-1">
+            <h4 class="card-header text-center">LOGIN</h4>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-2">
+                    <label class="form-label">Email address</label>
+                    <input type="email" name="username" class="form-control" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control">
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+            </form>
+        </div>
+        <div class="text-muted text-center">
+            <text class="mx-auto">Need an account? <a class="text-decoration-none"
+                                                      href="{% url 'register' %}">Register</a>
+            </text>
         </div>
     </div>
 </div>
