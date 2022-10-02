@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% for msg in messages %}
+<div class="toast-container position-fixed end-0 p-2">
+    <div id="liveToast" class="toast-body text-bg-info p-3 rounded-2">
+        {{msg}}
+    </div>
+</div>
+{% endfor %}
+
+<div class="row justify-content-between my-3">
+    <div class="col-5">
+        <div class="w-100 mx-auto my-2">
+            <input type="search" class="form-control" id="searchInput" placeholder="Search here...">
+        </div>
+
+        <ul class="list-group mt-2 overflow-auto" style="max-height: 75vh" id="searchValue">
+            {% for bh in boarding_houses %}
+            {% if bh.admin_approval %}
+            <button type="button" onclick="addMarker({lat: {{bh.latitude}}, lng: {{bh.longitude}}}, '{{bh.name}}')"
+                    style="all: unset">
+                <li class="list-group-item list-group-item-action">
+                    <div class="d-flex justify-content-between">
+                        <h4 class="mb-1">{{bh.name}}</h4>
+                        <small class="text-muted">{{bh.updated|timesince}} ago</small>
+                    </div>
+                    <p class="mb-1">{{bh.description}}</p>
+                    <div class="d-flex w-100 justify-content-between">
+                        <small class="text-muted mt-2 w-75"
+                               style="display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{bh.location}}</small>
+                        <a href="{% url 'bh-detail' bh.id %}" class="btn btn-sm btn-primary">Detail</a>
+                    </div>
+                </li>
+            </button>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="col-7">
+        <div class="ms-4 my-2">
+            <div class="ms-3 mb-2 text-center">
+                <h5 class="d-inline-block fst-italic my-2">MAP</h5>
+                <a href="{% url 'add-bh' %}" class="btn btn-primary float-end">
+                    ADD <i class="fa-solid fa-house-chimney-medical"></i>
+                </a>
+            </div>
+            <div id="map" style="height: 75vh; width: 100%;"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function(){
+  $("#searchInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#searchValue li").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+
+
+
+
+
+
+
+
+
+</script>
+
+{% endblock %}

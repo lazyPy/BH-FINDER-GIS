@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+{% for msg in messages %}
+<div class="toast-container position-fixed end-0 p-2">
+    <div id="liveToast" class="toast-body text-bg-info p-3 rounded-2">
+        {{msg}}
+    </div>
+</div>
+{% endfor %}
+
+<h3 class="text-center my-3">ADMIN PANEL</h3>
+<div class="w-25 mx-auto my-2">
+    <input type="search" class="form-control" id="searchInput" placeholder="Search here...">
+</div>
+
+<div class="row g-2 justify-content-around mt-2">
+    <div class="col-5 card bg-info">
+        <h5 class="card-title text-center fw-bold mt-1">TO APPROVED</h5>
+
+        <div class="table-responsive overflow-auto" style="max-height: 60vh">
+            <table class="card-body table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">List</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody id="searchValue1" class="table-group-divider">
+                {% for bh in boarding_houses %}
+                {% if bh.admin_approval == False %}
+                <tr>
+                    <td>{{bh.name}}</td>
+                    <td><a href="{% url 'admin-bh-detail' bh.id %}" class="btn btn-sm btn-primary"><i
+                            class="fa-solid fa-pen-to-square"></i></a></td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-5 card bg-warning">
+        <h5 class="card-title text-center fw-bold mt-1">APPROVED BH</h5>
+        <div class="table-responsive overflow-auto" style="max-height: 60vh">
+            <table class="card-body table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">List</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody id="searchValue2" class="table-group-divider">
+
+                {% for bh in boarding_houses %}
+                {% if bh.admin_approval == True %}
+                <tr>
+                    <td>{{bh.name}}</td>
+                    <td><a href="{% url 'admin-bh-detail' bh.id %}" class="btn btn-sm btn-primary"><i
+                            class="fa-solid fa-pen-to-square"></i></a></td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function(){
+  $("#searchInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#searchValue1 tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+
+$(document).ready(function(){
+  $("#searchInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#searchValue2 tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+{% endblock %}
