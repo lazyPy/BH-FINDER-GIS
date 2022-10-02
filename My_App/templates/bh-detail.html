@@ -71,7 +71,7 @@
                 <h4 class="ms-4 fst-italic">Just visit us!</h4>
                 <div class="card-body">
                     <h5 class="card-title"><i class="fa-sharp fa-solid fa-location-dot"></i> {{bh.location}}</h5>
-                    <p class="card-text">Description: {{bh.description}}</p>
+                    <p class="card-text">Description: {{bh.description|linebreaksbr}}</p>
                     <p class="card-text"><small class="text-muted">Owner: {{bh.owner}}</small></p>
                 </div>
 
@@ -126,16 +126,14 @@
                     </div>
                     {% endif %}
                 </div>
-
             </div>
 
-            <div class="card-footer">
-                <small class="text-muted"><h6 class="d-inline">Contact #: {{bh.phone}}</h6>
-                    <span
-                            class="text-muted float-end">Last updated {{bh.updated|timesince}} ago
-                </span>
-                </small>
-            </div>
+        </div>
+        <div class="card-header">
+            <small class="text-muted">
+                Contact #: {{bh.phone}}
+                <span class="text-muted float-end">Last updated {{bh.updated|timesince}} ago</span>
+            </small>
         </div>
     </div>
 </div>
