@@ -2,7 +2,7 @@
 {% block content %}
 
 {% for msg in messages %}
-<div class="toast-container position-fixed end-0 p-2">
+<div class="toast-container position-fixed end-0 p-1">
     <div id="liveToast" class="toast-body text-bg-info p-3 rounded-2">
         {{msg}}
     </div>
@@ -21,12 +21,12 @@
             <button type="button" onclick="addMarker({lat: {{bh.latitude}}, lng: {{bh.longitude}}}, '{{bh.name}}')"
                     style="all: unset">
                 <li class="list-group-item list-group-item-action">
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between w-100">
                         <h4 class="mb-1">{{bh.name}}</h4>
                         <small class="text-muted">{{bh.updated|timesince}} ago</small>
                     </div>
                     <p class="mb-1">{{bh.description}}</p>
-                    <div class="d-flex w-100 justify-content-between">
+                    <div class="d-flex justify-content-between w-100">
                         <small class="text-muted mt-2 w-75"
                                style="display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{bh.location}}</small>
                         <a href="{% url 'bh-detail' bh.id %}" class="btn btn-sm btn-primary">Detail</a>

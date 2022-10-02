@@ -2,7 +2,7 @@
 {% block content %}
 
 {% for msg in messages %}
-<div class="toast-container position-fixed end-0 p-2">
+<div class="toast-container position-fixed end-0 p-1">
     <div id="liveToast"
          class="toast-body {% if msg.tags == 'error' %}text-bg-danger{% elif msg.tags == 'info' %}text-bg-info{% endif %} p-3 rounded-2">
         {{msg}}
