@@ -128,7 +128,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'My_App/static'
 ]
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -139,4 +139,4 @@ GOOGLE_API_KEY = 'AIzaSyCv2n4qpTGjTb3LEriFYvzRmcw0kIkI0FU'
 
 AUTH_USER_MODEL = 'My_App.User'
 
-django_heroku.settings(locals())
+#django_heroku.settings(locals())
