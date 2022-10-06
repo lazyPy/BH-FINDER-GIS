@@ -4,17 +4,17 @@
 
 {% for msg in messages %}
 <div class="toast-container position-fixed end-0 p-1">
-    <div id="liveToast" class="toast-body text-bg-info p-3 rounded-2">
+    <div id="liveToast" class="toast-body text-bg-success p-3 rounded-2">
         {{msg}}
     </div>
 </div>
 {% endfor %}
-
-<div class="text-center my-4">
-    <button type="button" class="btn btn-primary rounded-5 float-start" onClick="javascript:history.go(-1);"><i class="fa-solid fa-angles-left"></i>
+<div class="container">
+<div class="text-bg-warning text-center rounded-2 my-2 p-1">
+    <button type="button" class="btn btn-warning text-success rounded-5 float-start" onClick="javascript:history.go(-1);"><i class="fa-solid fa-angles-left"></i>
     </button>
-    <h3 class="d-inline fw-bold">MY BOARDING HOUSE</h3>
-    <a href="{% url 'add-bh' %}" class="btn btn-primary float-end">
+    <h3 class="d-inline-block fw-bold mt-1">MY BOARDING HOUSE</h3>
+    <a href="{% url 'add-bh' %}" class="btn btn-sm btn-success float-end mt-1 me-2">
         ADD <i class="fa-solid fa-house-chimney-medical"></i>
     </a>
 </div>
@@ -22,7 +22,7 @@
 <div class="row g-1">
     {% for bh in boarding_houses %}
     {% if bh.owner == request.user %}
-    <div class="col-md-4 col-sm-6 d-flex justify-content-center">
+    <div class="col-6 d-flex justify-content-center">
         <div class="card" style="width: 18rem;">
             <div id="carouselExampleControls{{forloop.counter}}" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
@@ -72,8 +72,11 @@
                     </span>
                 </p>
                 <div class="text-center">
-                    <a href="{% url 'edit-bh' bh.id %}"
-                       class="btn btn-sm btn-primary mx-1 {% if bh.admin_approval%}disabled{% endif %}">EDIT</a>
+                    {% if bh.admin_approval == False %}
+                    <a href="{% url 'edit-bh' bh.id %}" class="btn btn-sm btn-success mx-1">
+                        EDIT
+                    </a>
+                    {% endif %}
                     <button type="button" class="btn btn-sm btn-danger mx-1" data-bs-toggle="modal"
                             data-bs-target="#staticBackdrop">DELETE
                     </button>
@@ -105,5 +108,6 @@
 
     {% endif %}
     {% endfor %}
+</div>
 </div>
 {% endblock %}

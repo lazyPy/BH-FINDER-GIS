@@ -4,7 +4,7 @@
 
 <div class="d-flex justify-content-center mt-3">
     <div class="card py-1" style="width: 35rem;">
-        <div class="card mt-1 mx-1">
+        <div class="card text-bg-warning mt-1 mx-1">
             <h4 class="card-header text-center">Update Boarding House</h4>
         </div>
         <div class="card-body">
@@ -21,18 +21,18 @@
                     <textarea class="form-control" id="desc" name="description" placeholder="Boarding House Description" required></textarea>
                 </div>
                 <div class="mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="number" class="form-control" id="price" name="price" value="{{bh.price}}"
+                           placeholder="Price" required>
+                </div>
+                <div class="mb-3">
                     <label for="number" class="form-label">Contact Number</label>
                     <input type="number" class="form-control" id="number" name="phone" value="{{bh.phone}}"
                            placeholder="09xxxxxxxxx" required>
                 </div>
                 <div class="mb-3">
-                    <label for="price" class="form-label">Price</label>
-                    <input type="number" class="form-control" id="price" name="price" value="{{bh.price}}"
-                           placeholder="&#20B1" required>
-                </div>
-                <div class="mb-3">
                     <label for="location" class="form-label">Location or
-                        <button type="button" class="btn btn-sm btn-primary rounded-3" onclick="getLoc()">Get my
+                        <button type="button" class="btn btn-sm btn-success rounded-3" onclick="getLoc()">Get my
                             location
                         </button>
                     </label>
@@ -96,7 +96,7 @@
                 </div>
 
                 <div class="d-grid mx-2">
-                    <button class="btn btn-primary" type="submit">UPDATE BOARDING HOUSE</button>
+                    <button class="btn btn-success" type="submit">UPDATE BOARDING HOUSE</button>
                 </div>
             </form>
         </div>

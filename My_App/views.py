@@ -106,8 +106,8 @@ def addBH(request):
             owner=request.user,
             name=request.POST.get('name'),
             description=request.POST.get('description'),
-            phone=request.POST.get('phone'),
             price=request.POST.get('price'),
+            phone=request.POST.get('phone'),
             location=request.POST.get('location'),
             latitude=request.POST.get('latitude'),
             longitude=request.POST.get('longitude'),
@@ -149,8 +149,8 @@ def updateBH(request, pk):
     bh.name = request.POST['name']
     bh.owner = request.user
     bh.description = request.POST['description']
-    bh.phone = request.POST['phone']
     bh.price = request.POST['price']
+    bh.phone = request.POST['phone']
     bh.location = request.POST['location']
     bh.latitude = request.POST['latitude']
     bh.longitude = request.POST['longitude']
