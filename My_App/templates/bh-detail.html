@@ -76,11 +76,7 @@
     </div>
 </div>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCv2n4qpTGjTb3LEriFYvzRmcw0kIkI0FU&libraries=places&callback=initMapX"
-        async defer></script>
-
-<script>
-function initMapX() {
+function initMap() {
 
     // Variables
     var mapX = new google.maps.Map(document.getElementById("mapX"));
@@ -132,7 +128,7 @@ function initMapX() {
     }
     directionsDisplayX.setMap(mapX);
 }
-window.initMapX = initMapX;
+window.initMap = initMap;
 
 
 
