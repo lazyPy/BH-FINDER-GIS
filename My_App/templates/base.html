@@ -20,7 +20,7 @@
 
 <nav class="navbar bg-success">
     <div class="container-md container-lg">
-        <a href="{% url 'home' %}"><img src="{% static 'image/isu-logo.png' %}" alt="" width="50"></a>
+        <a href="{% url 'home-page' %}"><img src="{% static 'image/isu-logo.png' %}" alt="" width="50"></a>
         <a href="#" class="navbar-brand text-light mx-auto">
             <span class="d-md-none">CAUAYAN CITY BH GIS</span>
             <span class="d-none d-md-block">CAUAYAN CITY BOARDING HOUSE GIS</span>
@@ -41,7 +41,7 @@
                     <hr class="dropdown-divider">
                 </li>
 
-                <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                <li><a class="dropdown-item" href="{% url 'logout-page' %}">Logout</a></li>
             </ul>
         </div>
         {% endif %}
@@ -91,7 +91,6 @@ function initMap() {
             infoWindow.setPosition(latlang);
             infoWindow.setContent("My location.");
             infoWindow.open(map);
-            map.setCenter(latlang);
         });
     }
 
@@ -110,8 +109,6 @@ function initMap() {
             content: content
         });
         google.maps.event.addListener(marker, 'click', function() {
-            infoWindow.setContent('My location');
-            infoWindow2.setContent(content);
             infoWindow2.open(map, marker);
 
             directionsService.route({
@@ -154,6 +151,7 @@ function getLoc() {
 }
 
 $("#liveToast").delay(3000).fadeOut('slow');
+
 
 </script>
 

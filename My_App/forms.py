@@ -9,6 +9,7 @@ class UserForm(UserCreationForm):
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     password2 = forms.CharField(label="Confirm Password", widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+
     class Meta:
         model = User
         fields = ['name', 'email', 'password1', 'password2']
@@ -23,5 +24,11 @@ class LoginForm(AuthenticationForm):
 class BoardingHouseForm(ModelForm):
     class Meta:
         model = BoardingHouse
-        fields = '__all__'
-        exclude = ['owner', 'admin-approval']
+        fields = ['name', 'description', 'price', 'phone', 'location', 'latitude', 'longitude']
+
+
+class BoardingHouseFullForm(ModelForm):
+    picture = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+
+    class Meta(BoardingHouseForm.Meta):
+        fields = BoardingHouseForm.Meta.fields + ['picture', ]

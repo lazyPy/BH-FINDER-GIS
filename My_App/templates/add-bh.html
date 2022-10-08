@@ -1,14 +1,13 @@
 {% extends 'base.html' %}
-
 {% block content %}
 
 <div class="d-flex justify-content-center mt-3">
     <div class="card py-1" style="width: 35rem;">
         <div class="card text-bg-warning mt-1 mx-1">
-            <h4 class="card-header text-center">Boarding House Form</h4>
+            <h4 class="card-header text-center">Add Boarding House</h4>
         </div>
         <div class="card-body">
-            <form method="post" enctype="multipart/form-data">
+            <form action="{% url 'add-bh' %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="mb-3">
                     <label for="name" class="form-label">Boarding House Name</label>
@@ -16,8 +15,8 @@
                            required>
                 </div>
                 <div class="mb-3">
-                    <label for="desc" class="form-label">Description</label>
-                    <textarea class="form-control" id="desc" name="description"
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" name="description"
                               placeholder="Boarding House Description"
                               required></textarea>
                 </div>
@@ -27,8 +26,8 @@
                            required>
                 </div>
                 <div class="mb-3">
-                    <label for="number" class="form-label">Contact Number</label>
-                    <input type="number" class="form-control" id="number" name="phone" placeholder="09xxxxxxxxx"
+                    <label for="phone" class="form-label">Contact Number</label>
+                    <input type="number" class="form-control" id="phone" name="phone" placeholder="09xxxxxxxxx"
                            required>
                 </div>
                 <div class="mb-3">
@@ -52,31 +51,10 @@
                            readonly>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Picture 1</label>
-                    <input type="file" class="form-control" name="picture1"
-                           accept="image/png, image/gif, image/jpeg" multiple>
+                    <label for="picture" class="form-label">Picture</label>
+                    <input type="file" class="form-control" id="picture" name="picture"
+                           accept="image/png, image/gif, image/jpeg" multiple required>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Picture 2</label>
-                    <input type="file" class="form-control" name="picture2"
-                           accept="image/png, image/gif, image/jpeg" multiple>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Picture 3</label>
-                    <input type="file" class="form-control" name="picture3"
-                           accept="image/png, image/gif, image/jpeg" multiple>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Picture 4</label>
-                    <input type="file" class="form-control" name="picture4"
-                           accept="image/png, image/gif, image/jpeg" multiple>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Picture 5</label>
-                    <input type="file" class="form-control" name="picture5"
-                           accept="image/png, image/gif, image/jpeg" multiple>
-                </div>
-
                 <div class="d-grid mx-2">
                     <button class="btn btn-success" type="submit">CREATE BOARDING HOUSE</button>
                 </div>

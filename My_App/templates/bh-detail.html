@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-{% load static %}
 
 {% for msg in messages %}
 <div class="toast-container position-fixed end-0 p-1">
@@ -10,119 +9,174 @@
 </div>
 {% endfor %}
 
-<div class="container">
+<div class="col-sm-11 col-md-10 mx-auto">
+
+    <div class="my-2 mx-auto" id="mapX" style="height: 40vh; width: 100%"></div>
+
     <div class="card my-2">
+
         <div class="card-header text-bg-warning">
             <div class="text-center">
-                <button type="button" class="btn btn-sm btn-warning text-success float-start"
+                <button type="button" class="btn btn-sm btn-warning text-success float-start mt-1"
                         onClick="javascript:history.go(-1);">
                     <i class="fa-solid fa-angles-left"></i>
                 </button>
-                <h3 class="d-inline fw-bold">{{bh.name}}</h3>
+                <h3 class="d-inline text-success fw-bold">{{bh.name}}</h3>
             </div>
         </div>
 
-           
-
-                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="{% if bh.picture1 %}{{bh.picture1.url}}{% else %}{% static 'image/bh-default.png' %}{% endif %}"
-                                 class="card-img-top img-fluid rounded"
-                                 alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{% if bh.picture2 %}{{bh.picture2.url}}{% else %}{% static 'image/bh-default.png' %}{% endif %}"
-                                 class="card-img-top img-fluid rounded"
-                                 alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{% if bh.picture3 %}{{bh.picture3.url}}{% else %}{% static 'image/bh-default.png' %}{% endif %}"
-                                 class="card-img-top img-fluid rounded"
-                                 alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{% if bh.picture4 %}{{bh.picture4.url}}{% else %}{% static 'image/bh-default.png' %}{% endif %}"
-                                 class="card-img-top img-fluid rounded"
-                                 alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="{% if bh.picture5 %}{{bh.picture5.url}}{% else %}{% static 'image/bh-default.png' %}{% endif %}"
-                                 class="card-img-top img-fluid rounded"
-                                 alt="...">
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
-                            data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
-                            data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                {% for bh_picture in bh.picture_set.all %}
+                <div class="carousel-item {% if forloop.last %}active{% endif %}">
+                    <a href="{{bh_picture.picture.url}}">
+                        <img src="{{bh_picture.picture.url}}"
+                             class="card-img-top img-fluid rounded"
+                             alt="...">
+                    </a>
                 </div>
-         
-                <div class="card-body">
-                    <h5 class="card-text fw-bold text-center text-danger">PHP {{bh.price}}</h5>
-                    <h6 class="card-text">Location: {{bh.location}}</h5>
-                    <h6 class="card-text">Description: {{bh.description|linebreaksbr}}</h6>
-                    <h6 class="card-text">Contact: {{bh.phone}}</h6>
-                    <h6 class="card-text">Owner: {{bh.owner}}</h6>
-                </div>
+                {% endfor %}
 
-               
-                    {% if request.user.is_superuser %}
-                    <form method="post">
-                        {% csrf_token %}
-                        <div class="input-group p-2">
-                            <select class="form-select" name="admin_approval" aria-label="Default select example">
-                                <option selected>{{status}}</option>
-                                {% if status == 'APPROVED' %}
-                                <option>DENIED</option>
-                                {% else %}
-                                <option>APPROVED</option>
-                                {% endif %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
 
-                            </select>
-                            <button type="submit" class="btn btn-sm btn-success">UPDATE</button>
-                        </div>
-                    </form>
+        <div class="card-body">
+            <h5 class="card-text fw-bold text-center text-danger">PHP {{bh.price}}</h5>
+            <h6 class="card-text">Location: {{bh.location}}</h6>
+            <h6 class="card-text">Description: {{bh.description|linebreaksbr}}</h6>
+            <h6 class="card-text">Contact: {{bh.phone}}</h6>
+            <h6 class="card-text">Owner: {{bh.owner}}</h6>
+        </div>
+
+
+        {% if request.user.is_superuser %}
+        <form method="post">
+            {% csrf_token %}
+            <div class="input-group p-2">
+                <select class="form-select" name="admin_approval" aria-label="Default select example">
+                    <option selected>{{status}}</option>
+                    {% if status == 'APPROVED' %}
+                    <option>DENIED</option>
+                    {% else %}
+                    <option>APPROVED</option>
                     {% endif %}
-                    {% if request.user == bh.owner %}
-                    <div class="d-flex justify-content-center mb-2">
-                        <a href="{% url 'edit-bh' bh.id %}" class="btn btn-success mx-1">EDIT</a>
-                        <button type="button" class="btn btn-danger mx-1" data-bs-toggle="modal"
-                                data-bs-target="#staticBackdrop">DELETE
+
+                </select>
+                <button type="submit" class="btn btn-sm btn-success">UPDATE</button>
+            </div>
+        </form>
+        {% endif %}
+
+        {% if request.user == bh.owner %}
+        <div class="d-flex justify-content-center mb-2">
+            <a href="{% url 'edit-bh' bh.id %}" class="btn btn-success mx-1">EDIT</a>
+            <button type="button" class="btn btn-danger mx-1" data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop">DELETE
+            </button>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+             tabindex="-1"
+             aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Delete Boarding House</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Do you want to delete {{bh.name}}?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">
+                            Cancel
                         </button>
+                        <a href="{% url 'delete-bh' bh.id %}" class="btn btn-sm btn-danger">Delete</a>
                     </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
 
-                    <!-- Modal -->
-                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-                         tabindex="-1"
-                         aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-sm modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="staticBackdropLabel">Delete Boarding House</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    Do you want to delete {{bh.name}}?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">
-                                        Cancel
-                                    </button>
-                                    <a href="{% url 'delete-bh' bh.id %}" class="btn btn-sm btn-danger">Delete</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
-              
+    </div>
 </div>
-</div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCv2n4qpTGjTb3LEriFYvzRmcw0kIkI0FU&libraries=places&callback=initMapX"
+        async defer></script>
+
+<script>
+function initMapX() {
+
+    // Variables
+    var mapX = new google.maps.Map(document.getElementById("mapX"));
+    var infoWindowX = new google.maps.InfoWindow();
+    var directionsServiceX = new google.maps.DirectionsService;
+    var directionsDisplayX = new google.maps.DirectionsRenderer;
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            latlangX = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            mapX.setCenter(latlangX);
+            mapX.setZoom(10);
+
+            infoWindowX.setPosition(latlangX);
+            infoWindowX.setContent("My location.");
+            infoWindowX.open(mapX);
+        });
+    }
+
+
+    addMarkerX({lat: {{bh.latitude}}, lng: {{bh.longitude}}}, '{{bh.name}}');
+
+
+    function addMarkerX(coords, content) {
+        const markerX = new google.maps.Marker({
+            position: coords,
+            map: mapX,
+        });
+        var infoWindow2X = new google.maps.InfoWindow({
+            content: content
+        });
+
+        google.maps.event.addListener(markerX, 'click', function() {
+            infoWindow2X.open(mapX, markerX);
+
+            directionsServiceX.route({
+                origin: latlangX,
+                destination: coords,
+                travelMode: 'DRIVING'
+            }, function(response, status) {
+                    if (status === 'OK') {
+                        directionsDisplayX.setDirections(response);
+                    } else {
+                        window.alert('Directions request failed due to ' + status);
+                    }
+                }
+            );
+        });
+    }
+    directionsDisplayX.setMap(mapX);
+}
+window.initMapX = initMapX;
+
+
+
+
+
+
+
+</script>
+
 {% endblock %}

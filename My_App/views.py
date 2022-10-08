@@ -20,7 +20,7 @@ def loginUser(request):
 
         if user is not None:
             login(request, user)
-            return redirect('admin-page')
+            return redirect('admin-home-page')
         else:
             messages.error(request, 'INCORRECT Username or Password')
 
@@ -38,7 +38,7 @@ def registerUser(request):
             group = Group.objects.get(name='user')
             user.groups.add(group)
             messages.info(request, 'Account Created!')
-            return redirect('login')
+            return redirect('login-page')
         else:
             messages.error(request, 'Invalid Credentials. Try again!')
 
@@ -48,13 +48,13 @@ def registerUser(request):
     return render(request, 'register.html', context)
 
 
-@login_required(login_url='login')
+@login_required(login_url='login-page')
 def logoutUser(request):
     logout(request)
-    return redirect('login')
+    return redirect('login-page')
 
 
-@login_required(login_url='login')
+@login_required(login_url='login-page')
 @admin_only
 def adminPage(request):
     boarding_houses = BoardingHouse.objects.all()
@@ -62,10 +62,10 @@ def adminPage(request):
     context = {
         'boarding_houses': boarding_houses,
     }
-    return render(request, 'admin-page.html', context)
+    return render(request, 'home-admin.html', context)
 
 
-@login_required(login_url='login')
+@login_required(login_url='login-page')
 @user_only
 def homePage(request):
     boarding_houses = BoardingHouse.objects.all()
@@ -73,10 +73,10 @@ def homePage(request):
     context = {
         'boarding_houses': boarding_houses,
     }
-    return render(request, 'home.html', context)
+    return render(request, 'home-user.html', context)
 
 
-@login_required(login_url='login')
+@login_required(login_url='login-page')
 @user_only
 def myBh(request, pk):
     boarding_houses = BoardingHouse.objects.all()
@@ -87,7 +87,7 @@ def myBh(request, pk):
     return render(request, 'my-bh.html', context)
 
 
-@login_required(login_url='login')
+@login_required(login_url='login-page')
 @user_only
 def bhDetail(request, pk):
     bh = BoardingHouse.objects.get(id=pk)
@@ -98,40 +98,35 @@ def bhDetail(request, pk):
     return render(request, 'bh-detail.html', context)
 
 
-@login_required(login_url='login')
+@login_required(login_url='login-page')
 @user_only
 def addBH(request):
     if request.method == 'POST':
-        BoardingHouse.objects.create(
-            owner=request.user,
-            name=request.POST.get('name'),
-            description=request.POST.get('description'),
-            price=request.POST.get('price'),
-            phone=request.POST.get('phone'),
-            location=request.POST.get('location'),
-            latitude=request.POST.get('latitude'),
-            longitude=request.POST.get('longitude'),
-            picture1=request.FILES.get('picture1'),
-            picture2=request.FILES.get('picture2'),
-            picture3=request.FILES.get('picture3'),
-            picture4=request.FILES.get('picture4'),
-            picture5=request.FILES.get('picture5')
-        )
-        messages.success(request, 'Boarding house created!')
-        return redirect('my-bh', request.user.id)
+        form = BoardingHouseFullForm(request.POST or None, request.FILES or None)
+        pictures = request.FILES.getlist('picture')
+        if form.is_valid():
+            owner = request.user
+            name = form.cleaned_data['name']
+            description = form.cleaned_data['description']
+            price = form.cleaned_data['price']
+            phone = form.cleaned_data['phone']
+            location = form.cleaned_data['location']
+            latitude = form.cleaned_data['latitude']
+            longitude = form.cleaned_data['longitude']
+            bh_obj = BoardingHouse.objects.create(owner=owner, name=name, description=description, price=price,
+                                                  phone=phone, location=location, latitude=latitude,
+                                                  longitude=longitude)
+
+            if pictures:  # check if user has uploaded some files
+                for f in pictures:
+                    Picture.objects.create(bh=bh_obj, picture=f)
+
+            messages.success(request, 'Boarding house created!')
+            return redirect('my-bh', request.user.id)
     return render(request, 'add-bh.html')
 
 
-@login_required(login_url='login')
-@user_only
-def deleteBH(request, pk):
-    bh = BoardingHouse.objects.get(id=pk)
-    bh.delete()
-    messages.success(request, 'Deleted Successfully!')
-    return redirect('my-bh', pk)
-
-
-@login_required(login_url='login')
+@login_required(login_url='login-page')
 @user_only
 def editBH(request, pk):
     bh = BoardingHouse.objects.get(id=pk)
@@ -146,23 +141,34 @@ def editBH(request, pk):
 @user_only
 def updateBH(request, pk):
     bh = BoardingHouse.objects.get(id=pk)
-    bh.name = request.POST['name']
     bh.owner = request.user
+    bh.name = request.POST['name']
     bh.description = request.POST['description']
     bh.price = request.POST['price']
     bh.phone = request.POST['phone']
     bh.location = request.POST['location']
     bh.latitude = request.POST['latitude']
     bh.longitude = request.POST['longitude']
-    bh.picture1 = request.FILES['picture1']
-    bh.picture2 = request.FILES['picture2']
-    bh.picture3 = request.FILES['picture3']
-    bh.picture4 = request.FILES['picture4']
-    bh.picture5 = request.FILES['picture5']
+
+    pictures = request.FILES.getlist('picture')
+    if pictures:  # check if user has uploaded some files
+        for bh_pictures in bh.picture_set.all():
+            bh_pictures.delete()
+        for f in pictures:
+            Picture.objects.create(bh=bh, picture=f)
     bh.save()
     messages.success(request, 'Updated Successfully!')
 
     return redirect('bh-detail', pk)
+
+
+@login_required(login_url='login-page')
+@user_only
+def deleteBH(request, pk):
+    bh = BoardingHouse.objects.get(id=pk)
+    bh.delete()
+    messages.success(request, 'Deleted Successfully!')
+    return redirect('my-bh', pk)
 
 
 def adminBHDetail(request, pk):

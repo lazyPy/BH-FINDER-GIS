@@ -1,11 +1,10 @@
-from django.contrib import messages
 from django.shortcuts import redirect
 
 
 def unauthenticated_user(view_func):
     def wrapper_func(request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect('home')
+            return redirect('home-page')
         else:
             return view_func(request, *args, **kwargs)
 
@@ -19,7 +18,7 @@ def admin_only(view_func):
             group = request.user.groups.all()[0].name
 
         if group == 'user':
-            return redirect('home')
+            return redirect('home-page')
 
         if group == 'admin':
             return view_func(request, *args, **kwargs)
@@ -31,7 +30,7 @@ def user_only(view_func):
     def wrapper_func_user(request, *args, **kwargs):
 
         if request.user.is_superuser:
-            return redirect('admin-page')
+            return redirect('admin-home-page')
         else:
             return view_func(request, *args, **kwargs)
 

@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-{% load static %}
 
 {% for msg in messages %}
 <div class="toast-container position-fixed end-0 p-1">
@@ -9,105 +8,98 @@
     </div>
 </div>
 {% endfor %}
-<div class="container">
-<div class="text-bg-warning text-center rounded-2 my-2 p-1">
-    <button type="button" class="btn btn-warning text-success rounded-5 float-start" onClick="javascript:history.go(-1);"><i class="fa-solid fa-angles-left"></i>
-    </button>
-    <h3 class="d-inline-block fw-bold mt-1">MY BOARDING HOUSE</h3>
-    <a href="{% url 'add-bh' %}" class="btn btn-sm btn-success float-end mt-1 me-2">
-        ADD <i class="fa-solid fa-house-chimney-medical"></i>
-    </a>
-</div>
 
-<div class="row g-1">
-    {% for bh in boarding_houses %}
-    {% if bh.owner == request.user %}
-    <div class="col-6 d-flex justify-content-center">
-        <div class="card" style="width: 18rem;">
-            <div id="carouselExampleControls{{forloop.counter}}" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="{% if bh.picture1 %}{{bh.picture1.url}}{% else %}{% static 'image/bh-default.png' %}{% endif %}"
-                             class="card-img-top img-fluid rounded" style="height: 18rem" alt="...">
+<div class="col-sm-11 col-md-10 mx-auto">
+
+    <div class="row justify-content-between text-bg-warning text-center rounded-2 my-2">
+        <button type="button" class="col-auto btn btn-warning text-success rounded-5 ms-1"
+                onClick="javascript:history.go(-1);"><i class="fa-solid fa-angles-left"></i>
+        </button>
+        <h3 class="col-4 text-success fw-bold mt-2">MY BOARDING HOUSE</h3>
+        <a href="{% url 'add-bh' %}" class="col-auto align-self-center btn btn-sm btn-success me-1">
+            ADD <i class="fa-solid fa-house-chimney-medical"></i>
+        </a>
+    </div>
+
+    <div class="row g-1">
+        {% for bh in boarding_houses %}
+        {% if bh.owner == request.user %}
+        <div class="col-6 d-flex justify-content-center">
+            <div class="card" style="width: 18rem;">
+                <div id="carouselExampleControls{{forloop.counter}}" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for bh_picture in bh.picture_set.all %}
+                        <div class="carousel-item {% if forloop.last %}active{% endif %}">
+                            <a href="{{bh_picture.picture.url}}">
+                                <img src="{{bh_picture.picture.url}}"
+                                     class="card-img-top img-fluid rounded" style="height: 18rem" alt="...">
+                            </a>
+                        </div>
+                        {% endfor %}
+
                     </div>
-                    <div class="carousel-item">
-                        <img src="{% if bh.picture2 %}{{bh.picture2.url}}{% else %}{% static 'image/bh-default.png' %}{% endif %}"
-                             class="card-img-top img-fluid rounded" style="height: 18rem" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{% if bh.picture3 %}{{bh.picture3.url}}{% else %}{% static 'image/bh-default.png' %}{% endif %}"
-                             class="card-img-top img-fluid rounded" style="height: 18rem" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{% if bh.picture4 %}{{bh.picture4.url}}{% else %}{% static 'image/bh-default.png' %}{% endif %}"
-                             class="card-img-top img-fluid rounded" style="height: 18rem" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{% if bh.picture5 %}{{bh.picture5.url}}{% else %}{% static 'image/bh-default.png' %}{% endif %}"
-                             class="card-img-top img-fluid rounded" style="height: 18rem" alt="...">
-                    </div>
+                    <button class="carousel-control-prev" type="button"
+                            data-bs-target="#carouselExampleControls{{forloop.counter}}"
+                            data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button"
+                            data-bs-target="#carouselExampleControls{{forloop.counter}}"
+                            data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
-                <button class="carousel-control-prev" type="button"
-                        data-bs-target="#carouselExampleControls{{forloop.counter}}"
-                        data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button"
-                        data-bs-target="#carouselExampleControls{{forloop.counter}}"
-                        data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-            <div class="card-body">
-                <h5 class="card-title text-center fw-bold">{{bh.name}}</h5>
-                <p class="card-text">Status:
-                    <span class="fw-bold">
+
+                <div class="card-body">
+                    <h5 class="card-title text-center fw-bold">{{bh.name}}</h5>
+                    <p class="card-text">Status:
+                        <span class="fw-bold">
                         {% if bh.admin_approval %}
                         APPROVED!
                         {% else %}
                         Waiting for approval
                         {% endif %}
                     </span>
-                </p>
-                <div class="text-center">
-                    {% if bh.admin_approval == False %}
-                    <a href="{% url 'edit-bh' bh.id %}" class="btn btn-sm btn-success mx-1">
-                        EDIT
-                    </a>
-                    {% endif %}
-                    <button type="button" class="btn btn-sm btn-danger mx-1" data-bs-toggle="modal"
-                            data-bs-target="#staticBackdrop">DELETE
-                    </button>
+                    </p>
+
+                    <div class="text-center">
+                        {% if bh.admin_approval == False %}
+                        <a href="{% url 'edit-bh' bh.id %}" class="btn btn-sm btn-success mx-1">
+                            EDIT
+                        </a>
+                        {% endif %}
+                        <button type="button" class="btn btn-sm btn-danger mx-1" data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop">DELETE
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-         aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Delete Boarding House</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Do you want to delete {{bh.name}}?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <a href="{% url 'delete-bh' bh.id %}" class="btn btn-sm btn-danger">Delete</a>
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+             aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Delete Boarding House</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Do you want to delete {{bh.name}}?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel
+                        </button>
+                        <a href="{% url 'delete-bh' bh.id %}" class="btn btn-sm btn-danger">Delete</a>
+                    </div>
                 </div>
             </div>
         </div>
+        {% endif %}
+        {% endfor %}
     </div>
-
-
-    {% endif %}
-    {% endfor %}
-</div>
 </div>
 {% endblock %}
