@@ -15,7 +15,7 @@
         <button type="button" class="col-auto btn btn-warning text-success rounded-5 ms-1"
                 onClick="javascript:history.go(-1);"><i class="fa-solid fa-angles-left"></i>
         </button>
-        <h3 class="col-4 text-success fw-bold mt-2">MY BOARDING HOUSE</h3>
+        <h5 class="col-4 text-success mt-2">MY BOARDING HOUSE</h5>
         <a href="{% url 'add-bh' %}" class="col-auto align-self-center btn btn-sm btn-success me-1">
             ADD <i class="fa-solid fa-house-chimney-medical"></i>
         </a>
@@ -53,15 +53,17 @@
                 </div>
 
                 <div class="card-body">
-                    <h5 class="card-title text-center fw-bold">{{bh.name}}</h5>
+                    <h6 class="card-title text-center fw-bold">{{bh.name}}</h6>
                     <p class="card-text">Status:
-                        <span class="fw-bold">
                         {% if bh.admin_approval %}
+                        <span class="text-success fst-italic">
                         APPROVED!
+                        </span>
                         {% else %}
+                        <span class="text-danger fst-italic">
                         Waiting for approval
+                        </span>
                         {% endif %}
-                    </span>
                     </p>
 
                     <div class="text-center">
