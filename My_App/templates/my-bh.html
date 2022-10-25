@@ -67,11 +67,9 @@
                     </p>
 
                     <div class="text-center">
-                        {% if bh.admin_approval == False %}
                         <a href="{% url 'edit-bh' bh.id %}" class="btn btn-sm btn-success mx-1">
                             EDIT
                         </a>
-                        {% endif %}
                         <button type="button" class="btn btn-sm btn-danger mx-1" data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop">DELETE
                         </button>

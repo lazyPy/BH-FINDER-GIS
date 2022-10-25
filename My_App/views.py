@@ -149,6 +149,7 @@ def updateBH(request, pk):
     bh.location = request.POST['location']
     bh.latitude = request.POST['latitude']
     bh.longitude = request.POST['longitude']
+    bh.admin_approval = False
 
     pictures = request.FILES.getlist('picture')
     if pictures:  # check if user has uploaded some files
