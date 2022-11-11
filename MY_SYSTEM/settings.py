@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'My_App',
     'crispy_forms',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -133,7 +134,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'My_App/static'
 ]
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -145,3 +146,14 @@ GOOGLE_API_KEY = 'AIzaSyCv2n4qpTGjTb3LEriFYvzRmcw0kIkI0FU'
 AUTH_USER_MODEL = 'My_App.User'
 
 django_heroku.settings(locals())
+
+#S3 BUCKETS CONFIG
+
+AWS_ACCESS_KEY_ID = 'AKIA2ZBEBHMMIP3YQMWO'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'bh-finder-bucket'
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
