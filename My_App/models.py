@@ -12,7 +12,8 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
-
+    def __str__(self):
+        return self.username
 
 
 class BoardingHouse(models.Model):
@@ -31,7 +32,8 @@ class BoardingHouse(models.Model):
     class Meta:
         ordering = ['-updated', '-created']
 
-
+    def __str__(self):
+        return self.owner.name
 
 
 class Picture(models.Model):
