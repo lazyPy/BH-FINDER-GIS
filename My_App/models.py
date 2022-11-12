@@ -13,7 +13,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     def __str__(self):
-        return self.name
+        return self.username
 
 
 class BoardingHouse(models.Model):
