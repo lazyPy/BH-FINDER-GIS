@@ -13,7 +13,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     def __str__(self):
-        return self.username
+        return str(self.name)
 
 
 class BoardingHouse(models.Model):
@@ -33,7 +33,7 @@ class BoardingHouse(models.Model):
         ordering = ['-updated', '-created']
 
     def __str__(self):
-        return self.owner.name
+        return str(self.name)
 
 
 class Picture(models.Model):
@@ -42,4 +42,4 @@ class Picture(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.bh
+        return str(self.bh)
