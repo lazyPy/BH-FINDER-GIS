@@ -1,6 +1,5 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 # Create your models here.
@@ -22,8 +21,7 @@ class BoardingHouse(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(max_length=200)
     price = models.FloatField()
-    phone = models.IntegerField(verbose_name='Contact Number',
-                                validators=[MinValueValidator(100), MaxValueValidator(1)])
+    phone = models.CharField(verbose_name='Contact Number', max_length=200)
     location = models.CharField(max_length=200)
     latitude = models.FloatField(verbose_name="Latitude", max_length=50, null=True, blank=True)
     longitude = models.FloatField(verbose_name="Longitude", max_length=50, null=True, blank=True)
