@@ -10,7 +10,7 @@
 {% endfor %}
 
 <div class="col-sm-12 col-md-10 mx-auto my-2">
-    <div class="py-1 text-bg-success rounded-2 p-1 mb-1">
+    <div class="py-1 rounded-2 p-1 mb-1" style="background-color: #77DD77; color: #000000;">
         <text class="h5 d-inline-block fst-italic mt-1">BOARDING HOUSE MAP</text>
         <a href="{% url 'add-bh' %}" class="btn btn-sm btn-warning float-end me-1">
             ADD <i class="fa-solid fa-house-chimney-medical"></i>
@@ -21,7 +21,7 @@
 </div>
 
 <div class="col-sm-12 col-md-10 mx-auto my-2">
-    <div class="py-1 text-bg-success rounded-2 p-1 mb-1">
+    <div class="py-1 rounded-2 p-1 mb-1" style="background-color: #77DD77; color: #000000;">
         <text class="h5 d-inline-block fst-italic mt-2">AVAILABLE LIST</text>
         <div class="w-50 float-end">
             <input type="search" class="form-control" id="searchInput" placeholder="Search here..."/>
@@ -32,7 +32,7 @@
         {% for bh in boarding_houses %}
         {% if bh.admin_approval and bh.owner != request.user %}
         <li class="list-group-item list-group-item-action text-bg-light mb-1">
-            <h4 class="text-center bg-warning p-1 rounded-2">
+            <h4 class="text-center p-1 rounded-2" style="background-color: #FDFD96; color: #000000;">
                 {{bh.name}}
             </h4>
             <p class="mb-1">{{bh.location}}</p>
