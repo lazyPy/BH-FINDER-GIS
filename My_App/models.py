@@ -22,7 +22,7 @@ class BoardingHouse(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(max_length=200)
     price = models.FloatField()
-    phone = models.IntegerField(verbose_name='Contact Number', validators=[MaxValueValidator(11), MinValueValidator(1)])
+    phone = models.IntegerField(verbose_name='Contact Number', validators=[MaxValueValidator(100), MinValueValidator(10)])
     location = models.CharField(max_length=200)
     latitude = models.FloatField(verbose_name="Latitude", max_length=50, null=True, blank=True)
     longitude = models.FloatField(verbose_name="Longitude", max_length=50, null=True, blank=True)
