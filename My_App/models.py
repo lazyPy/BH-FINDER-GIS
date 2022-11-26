@@ -19,7 +19,7 @@ class User(AbstractUser):
 class BoardingHouse(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
-    description = models.TextField(max_length=200)
+    description = models.TextField(max_length=500)
     price = models.FloatField()
     phone = models.CharField(verbose_name='Contact Number', max_length=200)
     location = models.CharField(max_length=200)
