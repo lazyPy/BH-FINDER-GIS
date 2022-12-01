@@ -43,19 +43,6 @@
                 View Detail
             </a>
         </li>
-        {% elif not bh.admin_approval and bh.owner != request.user %}
-        <li class="list-group-item list-group-item-action text-bg-light mb-1">
-            <h4 class="text-center p-1 rounded-2" style="background-color: #FF6961; color: #000000;">
-                {{bh.name}}
-            </h4>
-            <p class="mb-1">{{bh.location}}</p>
-            <h6 class="d-inline-block fw-bold mt-2">
-                PHP {{bh.price}}
-            </h6>
-            <a href="#" class="btn btn-sm btn-danger float-end">
-                NOT PERMITTED
-            </a>
-        </li>
         {% endif %}
         {% endfor %}
     </ul>
@@ -72,11 +59,6 @@
             });
         });
     });
-
-
-
-
-
 </script>
 
 {% endblock %}
