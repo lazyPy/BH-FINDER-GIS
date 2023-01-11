@@ -4,7 +4,7 @@
 
 {% for msg in messages %}
 <div class="toast-container position-fixed end-0 p-1">
-    <div id="liveToast" class="toast-body text-bg-danger p-3 rounded-2">
+    <div id="liveToast" class="toast-body {% if msg.tags == 'info' %}text-bg-danger{% elif msg.tags == 'success' %}text-bg-success{% endif %} p-3 rounded-2">
         {{msg}}
     </div>
 </div>

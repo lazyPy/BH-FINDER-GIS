@@ -24,7 +24,7 @@ class LoginForm(AuthenticationForm):
 class BoardingHouseForm(ModelForm):
     class Meta:
         model = BoardingHouse
-        fields = ['name', 'description', 'price', 'phone', 'location', 'latitude', 'longitude']
+        fields = ['name', 'description', 'price', 'avail_room', 'phone', 'location', 'latitude', 'longitude']
 
 
 class BoardingHouseFullForm(ModelForm):

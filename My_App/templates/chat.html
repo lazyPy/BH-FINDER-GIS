@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+
+    <div class="col-6">
+
+        <h6>Conversation</h6>
+        {% for message in bh_messages %}
+        <div>
+            {% if message.user == request.user %}
+            <small class="btn btn-primary">{{message.user}}</small>
+            <small>{{message.body}}</small>
+            <hr>
+            {% else %}
+                {% if message.user.is_authenticated %}
+                <small>{{message.user}}</small>
+                {% else %}
+                <small>Random User</small>
+                {% endif %}
+            <small>{{message.body}}</small>
+            <hr>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="body" placeholder="Type message...">
+        </form>
+
+    </div>
+
+
+</div>
+
+{% endblock %}

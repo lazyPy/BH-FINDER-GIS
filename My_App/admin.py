@@ -6,3 +6,5 @@ from .models import *
 admin.site.register(User)
 admin.site.register(BoardingHouse)
 admin.site.register(Picture)
+admin.site.register(Session)
+admin.site.register(Message)

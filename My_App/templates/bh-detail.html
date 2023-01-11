@@ -11,11 +11,83 @@
 
 <div class="col-sm-11 col-md-10 mx-auto">
 
-    <div class="row justify-content-start text-center rounded-2 my-2" style="background-color: #FDFD96;">
-        <button type="button" class="col-auto btn text-success rounded-5 ms-1"
-                onClick="javascript:history.go(-1);"><i class="fa-solid fa-angles-left" style="background-color: #FDFD96;"></i>
+    <div class="d-flex text-center rounded-2 my-2" style="background-color: #FDFD96;">
+        <a href="{% if request.user.is_superuser %}{% url 'admin-page' %}{% elif request.user.is_authenticated %}{% url 'bh-owner' %}{% else %}{% url 'user-page' %}{% endif %}"
+           class="col-auto btn text-success rounded-5 ms-1"><i class="fa-solid fa-angles-left"
+                                                               style="background-color: #FDFD96;"></i>
+        </a>
+        <h5 class="col-auto mx-auto text-success mt-2">{{bh.name}}</h5>
+        {% if not request.user.is_superuser %}
+        <button class="btn btn-sm btn-primary m-1" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasExample"
+                aria-controls="offcanvasExample">
+            Open Chat
         </button>
-        <h3 class="col-auto mx-auto text-success mt-2">{{bh.name}}</h3>
+        {% endif %}
+
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample">
+            {% if request.user.is_authenticated %}
+            <div class="offcanvas-header text-bg-dark">
+                <h6 class="offcanvas-title">List of Inquiries</h6>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+
+                {% for user_msg in user_messages %}
+                <div class="list-group mb-1">
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6>
+                                <span class="badge p-1 bg-danger border border-light rounded-circle">
+                                <span class="visually-hidden">.</span></span>
+                                User {{forloop.counter}}
+
+                            </h6>
+                            <small class="text-muted">3 days ago</small>
+                        </div>
+                        <p class="float-start text-muted">{{user_msg.message}}</p>
+                    </a>
+                </div>
+                {% endfor %}
+
+            </div>
+            {% else %}
+            <div class="offcanvas-header text-bg-dark">
+                <h6 class="offcanvas-title">Random People</h6>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+            </div>
+
+            <div class="h-100" id="refreshMsg">
+                <div class="offcanvas-body" style="height:83%" id="scrollMsg">
+                    {% for message in bh_messages %}
+                    {% if message.user == request.user or message.session == session %}
+                    <div class="d-flex justify-content-end my-1">
+                        <small class="border text-bg-primary rounded-2 p-2">{{message.body}}</small>
+                    </div>
+                    {% else %}
+                    {% if message.user == bh.owner %}
+                    <div class="d-flex justify-content-start my-1">
+                        <small class="border text-bg-dark rounded-2 p-2">{{message.body}}</small>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="position-absolute fixed-bottom bg-dark">
+                    <form method="post" id="post-message">
+                        {% csrf_token %}
+                        <div class="input-group p-2">
+                            <input type="text" class="form-control" name="body" id="body" placeholder="Type message..."
+                                   required>
+                            <button type="submit" class="btn btn-primary ms-1">Send</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+        </div>
     </div>
 
     <div class="my-4 mx-auto" id="mapX" style="height: 40vh; width: 100%"></div>
@@ -50,6 +122,7 @@
             <h4 class="card-text fw-bold text-center text-danger">PHP {{bh.price}}</h4>
             <h5 class="card-text">Location: {{bh.location}}</h5>
             <h5 class="card-text">Description: {{bh.description|linebreaksbr}}</h5>
+            <h5 class="card-text">Available Room: {{bh.avail_room}}</h5>
             <h5 class="card-text">Contact: {{bh.phone}}</h5>
             <h5 class="card-text">Owner: {{bh.owner}}</h5>
         </div>
@@ -133,6 +206,42 @@ function initMapX() {
     directionsDisplayX.setMap(mapX);
 }
 window.initMapX = initMapX;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </script>
 

@@ -21,6 +21,7 @@ class BoardingHouse(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(max_length=500)
     price = models.FloatField()
+    avail_room = models.IntegerField()
     phone = models.CharField(verbose_name='Contact Number', max_length=200)
     location = models.CharField(max_length=200)
     latitude = models.FloatField(verbose_name="Latitude", max_length=50, null=True, blank=True)
@@ -39,7 +40,24 @@ class BoardingHouse(models.Model):
 class Picture(models.Model):
     bh = models.ForeignKey(BoardingHouse, on_delete=models.CASCADE)
     picture = models.FileField(upload_to='bh-images/', blank=True, null=True)
-    created = models.DateTimeField(auto_now_add=True)
+    #created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return str(self.bh)
+
+
+class Session(models.Model):
+    session_id = models.CharField(max_length=200, unique=True)
+
+    def __str__(self):
+        return str(self.session_id)
+
+
+class Message(models.Model):
+    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
+    bh = models.ForeignKey(BoardingHouse, on_delete=models.CASCADE)
+    body = models.TextField()
+    session = models.ForeignKey(Session, blank=True, null=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.body

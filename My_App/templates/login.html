@@ -4,7 +4,7 @@
 {% for msg in messages %}
 <div class="toast-container position-fixed end-0 p-1">
     <div id="liveToast"
-         class="toast-body {% if msg.tags == 'error' %}text-bg-danger{% elif msg.tags == 'info' %}text-bg-success{% endif %} p-3 rounded-2">
+         class="toast-body {% if msg.tags == 'info' %}text-bg-danger{% elif msg.tags == 'success' %}text-bg-success{% endif %} p-3 rounded-2">
         {{msg}}
     </div>
 </div>
@@ -16,6 +16,13 @@
         <div class="card mt-1 mx-2" style="background-color: #FDFD96; color: #000000;">
             <h4 class="card-header text-center">LOGIN</h4>
         </div>
+
+        <div class="text-center">
+            <span class="text-dark">or</span>
+            <br>
+            <a href="{% url 'login-admin-page' %}" class="text-decoration-none text-primary mt-1 h6">Login as Administrator</a>
+        </div>
+
         <div class="card-body">
             <form method="post">
                 {% csrf_token %}

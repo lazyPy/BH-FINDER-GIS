@@ -17,7 +17,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -28,7 +27,6 @@ SECRET_KEY = 'django-insecure-tq&n_@ccmvit!p6rmz%1#q46kuuons3waf$++%s^%9#ezam+ch
 DEBUG = True
 
 ALLOWED_HOSTS = ['bhfinder.herokuapp.com']
-
 
 # Application definition
 
@@ -75,22 +73,29 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'MY_SYSTEM.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd5a6pj7e2ue597',
-        'USER': 'eifgalxbqprbvx',
-        'PASSWORD': '94c9075203a572e2a10ca5c14680d7095626e4b20a22b3085cf4ea50491027f3',
-        'HOST': 'ec2-3-225-213-67.compute-1.amazonaws.com',
-        'PORT': '5432',
+        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # 'NAME': 'd46uqpn7f4qbie',
+        # 'USER': 'caerdilljotmsa',
+        # 'PASSWORD': '618cf75f5583594cbab87f9b7702e0714094bfcdc476ffbbf532116e37cd309c',
+        # 'HOST': 'ec2-54-86-106-48.compute-1.amazonaws.com',
+        # 'PORT': '5432',
 
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'initial_db',
+        'USER': 'bh_finder',
+        'PASSWORD': 'bh_finder',
+        'HOST': 'bh-finder-db.chmlas0ue5o2.ap-northeast-1.rds.amazonaws.com',
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -110,7 +115,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -121,7 +125,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
@@ -134,7 +137,6 @@ STATICFILES_DIRS = [
     BASE_DIR / 'My_App/static'
 ]
 
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
@@ -146,7 +148,7 @@ AUTH_USER_MODEL = 'My_App.User'
 
 django_heroku.settings(locals())
 
-#S3 BUCKETS CONFIG
+# S3 BUCKETS CONFIG
 
 AWS_ACCESS_KEY_ID = 'AKIA2ZBEBHMMIP3YQMWO'
 AWS_SECRET_ACCESS_KEY = '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'
@@ -154,6 +156,13 @@ AWS_STORAGE_BUCKET_NAME = 'bh-finder-bucket'
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-#STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# EMAIL VERIFICATION
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'cauayanbhfinder@gmail.com'
+EMAIL_HOST_PASSWORD = 'abccuevuyeayjyse'
+EMAIL_PORT = 587

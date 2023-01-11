@@ -17,9 +17,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <style>
-        #bg-success {
-        background-color: yellow;
+        #scrollTop::-webkit-scrollbar {
+            display: none;
         }
+
     </style>
 
 </head>
@@ -27,23 +28,20 @@
 
 <nav class="navbar" style="background-color: #77DD77">
     <div class="container-md container-lg">
-        <a href="{% url 'home-page' %}"><img src="{% static 'image/isu-logo.png' %}" alt="" width="50"></a>
+        <a href="#"><img src="{% static 'image/isu-logo.png' %}" alt="" width="50"></a>
         <a href="#" class="navbar-brand mx-auto" style="color: #000000">
             <span class="d-md-none">CAUAYAN CITY BH GIS</span>
             <span class="d-none d-md-block">CAUAYAN CITY BOARDING HOUSE GIS</span>
         </a>
 
         <!-- Example split danger button -->
-        {% if user.is_authenticated %}
+        {% if request.user.is_authenticated %}
         <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
                 <img src="{% static 'image/user-logo.png' %}" alt="" width="45">
             </button>
             <ul class="dropdown-menu" style="min-width: 100px;">
-                {% if not request.user.is_superuser %}
-                <li><a class="dropdown-item" href="{% url 'my-bh' user.id %}">My BH</a></li>
-                {% endif %}
                 <li>
                     <hr class="dropdown-divider">
                 </li>
@@ -51,6 +49,8 @@
                 <li><a class="dropdown-item" href="{% url 'logout-page' %}">Logout</a></li>
             </ul>
         </div>
+        {% else %}
+        <a class="btn btn-sm btn-outline-light" href="{% url 'login-page' %}">LOGIN</a>
         {% endif %}
 
     </div>
@@ -159,6 +159,24 @@ function getLoc() {
 
 $("#liveToast").delay(3000).fadeOut('slow');
 
+var objDiv = document.getElementById("scrollMsg");
+objDiv.scrollTop = objDiv.scrollHeight;
+
+$(document).on('submit', '#post-message', function(e){
+    e.preventDefault();
+
+    $.ajax({
+        type:'POST',
+        url:'',
+        data:{
+            body:$("#body").val(),
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+        },
+        success:function (data){
+            $("#refreshMsg").load(location.href + " #refreshMsg");
+        }
+    })
+})
 
 </script>
 
