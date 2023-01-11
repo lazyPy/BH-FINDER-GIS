@@ -40,7 +40,6 @@ class BoardingHouse(models.Model):
 class Picture(models.Model):
     bh = models.ForeignKey(BoardingHouse, on_delete=models.CASCADE)
     picture = models.FileField(upload_to='bh-images/', blank=True, null=True)
-    created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return str(self.bh)
