@@ -40,7 +40,7 @@ class BoardingHouse(models.Model):
 class Picture(models.Model):
     bh = models.ForeignKey(BoardingHouse, on_delete=models.CASCADE)
     picture = models.FileField(upload_to='bh-images/', blank=True, null=True)
-    #created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return str(self.bh)
@@ -58,6 +58,7 @@ class Message(models.Model):
     bh = models.ForeignKey(BoardingHouse, on_delete=models.CASCADE)
     body = models.TextField()
     session = models.ForeignKey(Session, blank=True, null=True, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.body
